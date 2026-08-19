@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Information System · Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="registry">
+
+  <section class="ink-panel">
+    <div class="ink-panel__inner">
+      <p class="eyebrow">College Records Registry</p>
+      <h1 class="headline">Personal<br>Information<br>System</h1>
+      <p class="ink-panel__sub">Every record has a place. Sign in to open, add, or update an entry in the register.</p>
+
+      <div class="ledger-lines" aria-hidden="true">
+        <div class="ledger-lines__row"><span>REC.</span><span>NAME</span><span>STATUS</span></div>
+        <div class="ledger-lines__row"><span>001</span><span>&nbsp;</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>002</span><span>&nbsp;</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>003</span><span>&nbsp;</span><span class="dot"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-panel">
+
+    <div class="card">
+      <div class="card__tab">Record Access</div>
+
+      <div class="card__rivet card__rivet--tl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--tr" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--bl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--br" aria-hidden="true"></div>
+
+      <div class="stamp" aria-hidden="true">Verified</div>
+
+      <form class="form" action="{{ url_for('index') }}" method="POST">
+        <p class="card__title">Sign In</p>
+        <p class="card__desc">Enter your credentials to access the registry.</p>
+
+        {% if error %}
+          <p style="color:#A13D33; font-family:var(--font-mono); font-size:0.8rem; margin:-0.6rem 0 1.2rem 0;">{{ error }}</p>
+        {% endif %}
+
+        <label class="field">
+          <span class="field__label">Username</span>
+          <input type="text" name="username" placeholder="e.g. rverma" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Password</span>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </label>
+
+        <button type="submit" class="btn">Enter Registry</button>
+
+        <p class="card__footnote">No record yet? <a href="{{ url_for('signup') }}">Create one</a></p>
+      </form>
+
+      <div class="demo-note">
+        <span class="demo-note__label">Demo Access</span>
+        <span class="demo-note__creds">Username: <strong>demo</strong> &nbsp;·&nbsp; Password: <strong>demo123</strong></span>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Information System · Edit Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="registry">
+
+  <section class="ink-panel">
+    <div class="ink-panel__inner">
+      <p class="eyebrow">College Records Registry</p>
+      <h1 class="headline">Update<br>Record<br>{{ "%03d"|format(person.person_id) }}</h1>
+      <p class="ink-panel__sub">Amend this entry. Changes are saved directly to the existing record — no new file is created.</p>
+
+      <div class="ledger-lines" aria-hidden="true">
+        <div class="ledger-lines__row"><span>REC.</span><span>FIELD</span><span>STATUS</span></div>
+        <div class="ledger-lines__row"><span>01</span><span>Name / DOB</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>02</span><span>Contact</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>03</span><span>Address</span><span class="dot"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-panel">
+    <div class="card">
+      <div class="card__tab">Rec. No. {{ "%03d"|format(person.person_id) }}</div>
+
+      <div class="card__rivet card__rivet--tl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--tr" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--bl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--br" aria-hidden="true"></div>
+
+      <div class="stamp" aria-hidden="true">On File</div>
+
+      <form class="form" action="{{ url_for('edit_person', person_id=person.person_id) }}" method="POST">
+        <p class="card__title">Edit Person</p>
+        <p class="card__desc">Update the details for this record.</p>
+
+        <label class="field">
+          <span class="field__label">Full Name</span>
+          <input type="text" name="full_name" value="{{ person.full_name }}" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Date of Birth</span>
+          <input type="date" name="dob" value="{{ person.dob }}" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Gender</span>
+          <input type="text" name="gender" value="{{ person.gender or '' }}" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Phone</span>
+          <input type="tel" name="phone" value="{{ person.phone or '' }}" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input type="email" name="email" value="{{ person.email or '' }}" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Address</span>
+          <input type="text" name="address" value="{{ person.address or '' }}" required>
+        </label>
+
+        <button type="submit" class="btn">Update Record</button>
+
+        <p class="card__footnote"><a href="{{ url_for('dashboard') }}">← Back to all records</a></p>
+      </form>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

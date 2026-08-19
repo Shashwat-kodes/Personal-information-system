@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Information System · Create Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="registry">
+
+  <section class="ink-panel">
+    <div class="ink-panel__inner">
+      <p class="eyebrow">College Records Registry</p>
+      <h1 class="headline">Open a<br>New<br>Record</h1>
+      <p class="ink-panel__sub">Register your details once, and your entry is filed for every future visit to the registry.</p>
+
+      <div class="ledger-lines" aria-hidden="true">
+        <div class="ledger-lines__row"><span>REC.</span><span>FIELD</span><span>STATUS</span></div>
+        <div class="ledger-lines__row"><span>01</span><span>Full Name</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>02</span><span>Username</span><span class="dot"></span></div>
+        <div class="ledger-lines__row"><span>03</span><span>Password</span><span class="dot"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-panel">
+
+    <div class="card">
+      <div class="card__tab">New Entry</div>
+
+      <div class="card__rivet card__rivet--tl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--tr" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--bl" aria-hidden="true"></div>
+      <div class="card__rivet card__rivet--br" aria-hidden="true"></div>
+
+      <form class="form" action="{{ url_for('signup') }}" method="POST">
+        <p class="card__title">Create Record</p>
+        <p class="card__desc">Fill in your details to open a new file in the registry.</p>
+
+        {% if error %}
+          <p style="color:#A13D33; font-family:var(--font-mono); font-size:0.8rem; margin:-0.6rem 0 1.2rem 0;">{{ error }}</p>
+        {% endif %}
+
+        <label class="field">
+          <span class="field__label">Full Name</span>
+          <input type="text" name="full_name" placeholder="e.g. Riya Verma" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Username</span>
+          <input type="text" name="username" placeholder="Choose a username" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input type="email" name="email" placeholder="you@example.com" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Password</span>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Confirm Password</span>
+          <input type="password" name="confirm_password" placeholder="••••••••" required>
+        </label>
+
+        <button type="submit" class="btn">Create Record</button>
+
+        <p class="card__footnote">Already registered? <a href="{{ url_for('index') }}">Sign in</a></p>
+      </form>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>
