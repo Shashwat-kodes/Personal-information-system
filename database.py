@@ -14,14 +14,18 @@ DB_CONFIG = {
     "connection_timeout": 30,
 }
 
-# Create ONE pool when app starts
-connection_pool = pooling.MySQLConnectionPool(
-    pool_name="aiven_pool",
-    pool_size=5,
-    pool_reset_session=True,
-    **DB_CONFIG
-)
+_pool = None
+
+def get_pool():
+    global _pool
+    if _pool is None:
+        _pool = pooling.MySQLConnectionPool(
+            pool_name="aiven_pool",
+            pool_size=3,
+            pool_reset_session=True,
+            **DB_CONFIG
+        )
+    return _pool
 
 def get_db_connection():
-    """Get a connection from the pool — auto-returned when conn.close() is called."""
-    return connection_pool.get_connection()
+    return get_pool().get_connection()
