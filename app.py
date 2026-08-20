@@ -5,6 +5,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db_connection
 
 app = Flask(__name__)
+@app.route("/health")
+def health():
+    return "OK", 200
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 

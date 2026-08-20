@@ -1,9 +1,6 @@
 import os
 import mysql.connector
-
-# ---------------------------------------------------------------
-# AIVEN MYSQL DATABASE CONFIGURATION
-# ---------------------------------------------------------------
+from mysql.connector import pooling
 
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST"),
@@ -11,16 +8,20 @@ DB_CONFIG = {
     "user": os.environ.get("DB_USER"),
     "password": os.environ.get("DB_PASSWORD"),
     "database": os.environ.get("DB_NAME", "defaultdb"),
-
-    # Aiven requires SSL
     "ssl_ca": os.path.join(os.path.dirname(__file__), "ca.pem"),
     "ssl_verify_cert": True,
     "ssl_verify_identity": True,
+    "connection_timeout": 30,
 }
 
+# Create ONE pool when app starts
+connection_pool = pooling.MySQLConnectionPool(
+    pool_name="aiven_pool",
+    pool_size=5,
+    pool_reset_session=True,
+    **DB_CONFIG
+)
 
 def get_db_connection():
-    """
-    Opens and returns a new connection to the Aiven MySQL database.
-    """
-    return mysql.connector.connect(**DB_CONFIG)
+    """Get a connection from the pool — auto-returned when conn.close() is called."""
+    return connection_pool.get_connection()
