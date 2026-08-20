@@ -1,10 +1,11 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db_connection
 
 app = Flask(__name__)
-app.secret_key = "replace_this_with_a_random_secret_key"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 
 # ---------------------------------------------------------------
